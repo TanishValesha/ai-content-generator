@@ -2,7 +2,8 @@ import FeatureCard from "@/components/FeatureCard";
 import AnimatedGridPattern from "@/components/ui/animated-grid-pattern";
 import { TextAnimate } from "@/components/ui/text-animate";
 import { cn } from "@/lib/utils";
-import { Brain, Clock, MoveRight, Zap } from "lucide-react";
+import { Brain, Clock, Zap } from "lucide-react";
+import HomeButton from "@/components/HomeButton";
 
 export default function Home() {
   return (
@@ -38,12 +39,7 @@ export default function Home() {
             AI-powered platform helps you create blog posts, social media
             content, and more with just a few clicks.
           </p>
-          <div className="mt-10 text-center flex items-center justify-center">
-            <button className="px-8 py-3 text-white rounded-lg text-lg font-bold bg-gradient-to-r from-violet-600 to-indigo-600 flex items-center justify-center gap-2 ">
-              <span>Start Creating Now</span>
-              <MoveRight />
-            </button>
-          </div>
+          <HomeButton />
         </div>
       </section>
 
@@ -54,7 +50,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-gray-900">
               Powerful Features
             </h2>
-            <p className="mt-4 text-gray-600">
+            <p className="text-gray-600">
               Everything you need to create outstanding content
             </p>
           </div>

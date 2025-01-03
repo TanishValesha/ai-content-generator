@@ -10,7 +10,7 @@ const FeatureCard = ({
   description: string;
 }) => {
   return (
-    <div className="p-6 bg-gray-50 rounded-xl">
+    <div className="p-6 bg-gray-50 shadow-lg rounded-xl">
       <div className="w-12 h-12 flex items-center justify-center bg-indigo-100 rounded-lg">
         {icon}
       </div>

@@ -1,7 +1,12 @@
+"use client";
+
 import React from "react";
 import { Sparkles, Menu } from "lucide-react";
+import Link from "next/link";
+import { SignInButton, UserButton, useUser } from "@clerk/nextjs";
 
 export default function Navbar() {
+  const { user } = useUser();
   return (
     <header>
       <nav className="fixed w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
@@ -16,24 +21,32 @@ export default function Navbar() {
 
             <div className="hidden md:block">
               <div className="flex items-center space-x-8">
-                <a
-                  href="#features"
-                  className="text-gray-600 hover:text-gray-900"
-                >
-                  Features
-                </a>
-                <a
-                  href="#pricing"
+                <Link
+                  href="/pricing"
                   className="text-gray-600 hover:text-gray-900"
                 >
                   Pricing
-                </a>
-                <a href="#about" className="text-gray-600 hover:text-gray-900">
-                  About
-                </a>
-                <button className="text-white font-bold px-4 py-2 rounded-lg bg-gradient-to-r from-violet-600 to-indigo-600">
+                </Link>
+                {user ? (
+                  <div className="flex items-center space-x-2">
+                    <UserButton />
+                    <div className="hidden sm:block text-xs">
+                      <p className="text-gray-400">Welcome Back</p>
+                      <p className="font-bold">{user.fullName}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-white font-bold px-4 py-2 rounded-lg bg-gradient-to-r from-fuchsia-500 to-cyan-500">
+                    <SignInButton mode="modal" />
+                  </div>
+                )}
+
+                {/* <Link
+                  href={"/dashboard"}
+                  className="text-white font-bold px-4 py-2 rounded-lg bg-gradient-to-r from-fuchsia-500 to-cyan-500"
+                >
                   Get Started
-                </button>
+                </Link> */}
               </div>
             </div>
 
