@@ -1,7 +1,6 @@
 "use client";
 
 import { Sparkles } from "lucide-react";
-import { Search } from "./Search";
 
 export function Header() {
   return (
@@ -10,7 +9,6 @@ export function Header() {
         <Sparkles className="h-8 w-8 text-indigo-600" />
         <span className="ml-2 text-xl font-bold text-gray-900">TemplateAI</span>
       </div>
-      <Search />
     </header>
   );
 }
