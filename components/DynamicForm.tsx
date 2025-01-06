@@ -15,6 +15,7 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { chatSession } from "@/gemini/gemini";
+import { Loader } from "lucide-react";
 
 interface DynamicFormProps {
   selectedTemplate?: {
@@ -31,11 +32,13 @@ interface DynamicFormProps {
       required?: boolean;
     }[];
   };
+  onGeneration: (aiOutput: string) => void;
 }
 
-const DynamicForm = ({ selectedTemplate }: DynamicFormProps) => {
+const DynamicForm = ({ selectedTemplate, onGeneration }: DynamicFormProps) => {
   const [userData, setUserData] = useState("");
   const [isClient, setIsClient] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -46,10 +49,13 @@ const DynamicForm = ({ selectedTemplate }: DynamicFormProps) => {
   }
 
   const generateGeminiResponse = async () => {
+    setIsLoading(true);
     const finalResponse = await chatSession.sendMessage(
       selectedTemplate?.aiPrompt + userData
     );
     console.log(finalResponse.response.text());
+    onGeneration(finalResponse.response.text());
+    setIsLoading(false);
   };
 
   return (
@@ -110,7 +116,9 @@ const DynamicForm = ({ selectedTemplate }: DynamicFormProps) => {
           <Button
             className="bg-indigo-600 hover:bg-indigo-700 font-bold"
             onClick={generateGeminiResponse}
+            disabled={isLoading}
           >
+            {isLoading && <Loader className="animate-spin" />}
             Generate Content
           </Button>
         </CardFooter>
