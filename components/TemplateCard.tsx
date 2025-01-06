@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Image from "next/image";
+import Link from "next/link";
 
 type TemplateCardProps = {
   template: {
@@ -24,7 +25,7 @@ type TemplateCardProps = {
 
 const TemplateCard = (template: TemplateCardProps) => {
   return (
-    <div>
+    <Link href={`/dashboard/content/${template.template.slug}`}>
       <Card className="flex flex-col justify-center items-start max-w-xl px-2 py-4">
         <div className="px-4">
           <Image
@@ -55,7 +56,7 @@ const TemplateCard = (template: TemplateCardProps) => {
         <Button>Deploy</Button>
       </CardFooter> */}
       </Card>
-    </div>
+    </Link>
   );
 };
 

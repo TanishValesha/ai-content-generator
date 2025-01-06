@@ -310,7 +310,7 @@ export const templates = [
     name: "Tagline Generator",
     desc: "Struggling to find the perfect tagline for your brand? Let our AI-tool assist you in creating a tagline that stands out.",
     icon: "https://cdn-icons-png.flaticon.com/128/2178/2178616.png",
-    category: "Marketting",
+    category: "Marketing",
 
     slug: "tagline-generator",
     aiPrompt:
@@ -323,7 +323,7 @@ export const templates = [
         required: true,
       },
       {
-        label: "What you are selling / Marketting",
+        label: "What you are selling / Marketing",
         field: "textarea",
         name: "outline",
         required: true,
