@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -12,6 +14,7 @@ import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
+import { chatSession } from "@/gemini/gemini";
 
 interface DynamicFormProps {
   selectedTemplate?: {
@@ -31,6 +34,24 @@ interface DynamicFormProps {
 }
 
 const DynamicForm = ({ selectedTemplate }: DynamicFormProps) => {
+  const [userData, setUserData] = useState("");
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
+
+  const generateGeminiResponse = async () => {
+    const finalResponse = await chatSession.sendMessage(
+      selectedTemplate?.aiPrompt + userData
+    );
+    console.log(finalResponse.response.text());
+  };
+
   return (
     <div>
       <Card className="flex flex-col justify-center items-start max-w-xl px-2 py-4 gap-4">
@@ -62,7 +83,11 @@ const DynamicForm = ({ selectedTemplate }: DynamicFormProps) => {
                     className="flex flex-col justify-center items-start gap-2 w-[500px]"
                   >
                     <Label className="text-xl font-bold">{item.label}</Label>
-                    <Input className="w-full" placeholder="Enter Here"></Input>
+                    <Input
+                      className="w-full"
+                      placeholder="Enter Here"
+                      onChange={(e) => setUserData(e.target.value + "\n")}
+                    ></Input>
                   </div>
                 ) : (
                   <div
@@ -73,6 +98,7 @@ const DynamicForm = ({ selectedTemplate }: DynamicFormProps) => {
                     <Textarea
                       className="w-[500px] h-28"
                       placeholder="Type your message here."
+                      onChange={(e) => setUserData(e.target.value + "\n")}
                     />
                   </div>
                 )
@@ -81,7 +107,10 @@ const DynamicForm = ({ selectedTemplate }: DynamicFormProps) => {
           </form>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button className="bg-indigo-600 hover:bg-indigo-700 font-bold">
+          <Button
+            className="bg-indigo-600 hover:bg-indigo-700 font-bold"
+            onClick={generateGeminiResponse}
+          >
             Generate Content
           </Button>
         </CardFooter>

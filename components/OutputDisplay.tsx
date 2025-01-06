@@ -13,6 +13,7 @@ const Editor = dynamic(
 );
 
 const OutputDisplay = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const editorRef: any = useRef(null);
 
   return (
