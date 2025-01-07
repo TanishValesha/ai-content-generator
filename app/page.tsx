@@ -7,19 +7,19 @@ import HomeButton from "@/components/HomeButton";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
+      <AnimatedGridPattern
+        numSquares={100}
+        maxOpacity={0.3}
+        duration={3}
+        repeatDelay={0.5}
+        className={cn(
+          "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
+          "inset-x-0 inset-y-[-30%] skew-y-12 h-screen"
+        )}
+      />
       {/* Hero Section */}
       <section className="pt-20 pb-16 sm:pt-24 sm:pb-20">
-        <AnimatedGridPattern
-          numSquares={100}
-          maxOpacity={0.5}
-          duration={3}
-          repeatDelay={0.5}
-          className={cn(
-            "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
-            "inset-x-0 inset-y-[-30%] h-[100%] skew-y-12"
-          )}
-        />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-32 text-center">
           <TextAnimate
             animation="blurInUp"

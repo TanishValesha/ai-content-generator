@@ -16,6 +16,10 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { chatSession } from "@/gemini/gemini";
 import { Loader } from "lucide-react";
+import { historySchema } from "@/db/schema";
+import db from "@/db/config";
+import { useUser } from "@clerk/nextjs";
+import moment from "moment";
 
 interface DynamicFormProps {
   selectedTemplate?: {
@@ -39,6 +43,7 @@ const DynamicForm = ({ selectedTemplate, onGeneration }: DynamicFormProps) => {
   const [userData, setUserData] = useState("");
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useUser();
 
   useEffect(() => {
     setIsClient(true);
@@ -48,6 +53,25 @@ const DynamicForm = ({ selectedTemplate, onGeneration }: DynamicFormProps) => {
     return null;
   }
 
+  const handleDbSave = async (
+    formData: string,
+    aiOutput: string,
+    templateSlug: string
+  ) => {
+    const result = await db
+      .insert(historySchema)
+      .values({
+        formData: formData,
+        aiResponse: aiOutput,
+        templateSlug: templateSlug,
+        createdBy: user?.primaryEmailAddress?.emailAddress || "unknown",
+        createdAt: moment().format("dddd, MMMM Do YYYY, h:mm:ss a"),
+      })
+      .returning();
+
+    console.log(result);
+  };
+
   const generateGeminiResponse = async () => {
     setIsLoading(true);
     const finalResponse = await chatSession.sendMessage(
@@ -56,6 +80,11 @@ const DynamicForm = ({ selectedTemplate, onGeneration }: DynamicFormProps) => {
     console.log(finalResponse.response.text());
     onGeneration(finalResponse.response.text());
     setIsLoading(false);
+    await handleDbSave(
+      userData,
+      finalResponse.response.text(),
+      selectedTemplate?.slug || "default-slug"
+    );
   };
 
   return (
