@@ -7,6 +7,6 @@ export default defineConfig({
   schema: "./db/schema.ts",
   dialect: "postgresql",
   dbCredentials: {
-    url: process.env.NEXT_DB_URL!,
+    url: "postgresql://responses_owner:0svt1MXzGrbA@ep-sweet-breeze-a52v21tb.us-east-2.aws.neon.tech/responses?sslmode=require",
   },
 });

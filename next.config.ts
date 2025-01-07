@@ -1,4 +1,6 @@
 import type { NextConfig } from "next";
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+require("dotenv").config();
 
 const nextConfig: NextConfig = {
   images: {

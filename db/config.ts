@@ -1,6 +1,13 @@
+// filepath: /home/tanish/Web/ai-generator/db/config.ts
 import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-serverless";
+import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";
+
+// if (!process.env.NEXT_DB_URL) {
+//   throw new Error(
+//     "No database connection string was provided to `neon()`. Perhaps an environment variable has not been set?"
+//   );
+// }
 
 // Initialize the Neon client
 const sql = neon(
@@ -8,6 +15,6 @@ const sql = neon(
 );
 
 // Pass the Neon client directly to drizzle
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const db = drizzle(sql as any, { schema });
+const db = drizzle(sql, { schema });
+
 export default db;
