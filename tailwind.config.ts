@@ -57,7 +57,8 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		animation: {
-  			meteor: 'meteor 5s linear infinite'
+  			meteor: 'meteor 5s linear infinite',
+  			gradient: 'gradient 8s linear infinite'
   		},
   		keyframes: {
   			meteor: {
@@ -71,6 +72,11 @@ export default {
   				'100%': {
   					transform: 'rotate(215deg) translateX(-500px)',
   					opacity: '0'
+  				}
+  			},
+  			gradient: {
+  				to: {
+  					backgroundPosition: 'var(--bg-size) 0'
   				}
   			}
   		}

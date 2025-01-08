@@ -2,6 +2,7 @@
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";
+import { creditSchema } from "./creditSchema";
 
 // if (!process.env.NEXT_DB_URL) {
 //   throw new Error(
@@ -15,6 +16,6 @@ const sql = neon(
 );
 
 // Pass the Neon client directly to drizzle
-const db = drizzle(sql, { schema });
+const db = drizzle(sql, { schema: { history: schema, credit: creditSchema } });
 
 export default db;

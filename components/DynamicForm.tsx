@@ -16,11 +16,9 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { chatSession } from "@/gemini/gemini";
 import { Loader } from "lucide-react";
-import { historySchema } from "@/db/schema";
-import db from "@/db/config";
 import { useUser } from "@clerk/nextjs";
-import moment from "moment";
 import { handleDbSave } from "./setDbData";
+import useCounterStore from "@/credits/store";
 
 interface DynamicFormProps {
   selectedTemplate?: {
@@ -46,6 +44,8 @@ const DynamicForm = ({ selectedTemplate, onGeneration }: DynamicFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useUser();
 
+  const { increment } = useCounterStore();
+
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -59,7 +59,6 @@ const DynamicForm = ({ selectedTemplate, onGeneration }: DynamicFormProps) => {
     const finalResponse = await chatSession.sendMessage(
       selectedTemplate?.aiPrompt + userData
     );
-    console.log(finalResponse.response.text());
     onGeneration(finalResponse.response.text());
     setIsLoading(false);
     await handleDbSave(
@@ -68,6 +67,7 @@ const DynamicForm = ({ selectedTemplate, onGeneration }: DynamicFormProps) => {
       selectedTemplate?.slug || "default-slug",
       user?.primaryEmailAddress?.emailAddress || "unknown"
     );
+    increment(finalResponse.response.text().length);
   };
 
   return (
